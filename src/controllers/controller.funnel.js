@@ -37,6 +37,8 @@ module.exports = function (Chart) {
 		gap: 0,
 		bottomWidth: null, // the bottom width of funnel
 		topWidth: 0, // the top width of funnel
+		lastFull: false, // will the last funnel step will remain full (and not shrink to top/bottom width)
+
 		keep: 'auto', // Keep left or right
 		elements: {
 			borderWidth: 0
@@ -294,8 +296,10 @@ module.exports = function (Chart) {
 						},
 						index
 						);
-				upperWidth = previousElement ? previousElement.val * dwRatio : me.topWidth;
+
 				bottomWidth = elementData.val * dwRatio;
+				upperWidth = previousElement ? previousElement.val * dwRatio : (opts.lastFull ? bottomWidth : me.topWidth);
+
 			} else if (sort === 'desc' || sort === 'data-desc') {
 				var nextElement = helpers.findNextWhere(me.valAndLabels,
 						function (el) {
@@ -304,7 +308,7 @@ module.exports = function (Chart) {
 						index
 						);
 				upperWidth = elementData.val * dwRatio;
-				bottomWidth = nextElement ? nextElement.val * dwRatio : me.topWidth;
+				bottomWidth = nextElement ? nextElement.val * dwRatio : (opts.lastFull ? upperWidth : me.topWidth);
 			}
 
 			y = chartArea.top + elementData.orgIndex * (elHeight + gap);

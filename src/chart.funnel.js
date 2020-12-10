@@ -9,10 +9,10 @@
 /* global window */
 "use strict";
 
-var Chart = require('chart.js');
-Chart = typeof(Chart) === 'function' ? Chart : window.Chart;
+var Chart = require("chart.js");
+Chart = typeof Chart === "function" ? Chart : window.Chart;
 
-require('./elements/element.trapezium.js')(Chart);
+require("./elements/element.trapezium.js")(Chart);
 require("./controllers/controller.funnel.js")(Chart);
 
 module.exports = Chart;
